@@ -1,0 +1,18 @@
+
+//    "babel-preset-env": "^1.7.0", 
+// setting up the babel preset enviroment
+
+{
+    "presets": [
+        ["@babel/env", {
+            "useBuiltIns": "usage",
+            "corejs": "3",
+            "targets": {
+                "browsers": [
+                    "last 5 versions",
+                    "ie >= 8"
+                ]
+            }
+        }]
+    ]
+}
