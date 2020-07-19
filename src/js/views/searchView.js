@@ -22,10 +22,6 @@ const renderRecipe = (recipe) => {
 	elements.searchResList.insertAdjacentHTML("beforeend", markup);
 };
 
-export const renderResults = (recipes) => {
-	recipes.forEach(renderRecipe);
-};
-
 //clears the input after clicking Search
 //in curly braces so there's no implicit return
 export const clearInput = () => {
@@ -61,4 +57,40 @@ const limitRecipeTitle = (title, limit = 17) => {
         return `${newTitle.join(' ')}...`;
 	}
 	return title;
+};
+
+///////////////////////////////////////////////////
+// rendering buttons
+// side will be either left or right, type: 'prev' or 'next'
+const buttonHtml = (page, type) =>
+    `
+    <button class="btn-inline results__btn--${type}" data-goto=${type === 'prev' ? 'left' : 'right'}>
+        <svg class="search__icon">
+            <use href="img/icons.svg#icon-triangle-${type === 'prev' ? 'left' : 'right'}"></use>
+        </svg>
+        <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
+    </button>
+    `;
+
+const renderButtons = (page, numResults, resPerPage) => {
+    const pages = Math.ceil(numResults / resPerPage); 
+    let button;
+
+    if (page === 1 && pages > 1) {
+        //only button to the next page 
+        button = buttonHtml(page, 'next')
+    } else if (page < pages && page !== 1) {
+        //both buttons
+        button = `${button = buttonHtml(page, 'next')} ${button = buttonHtml(page, 'prev')}`
+    } else if (page === pages && pages > 1) {
+        //only button to the previous page
+        button = buttonHtml(page, 'prev')
+    }
+}
+
+export const renderResults = (recipes, page = 1, resPerPage = 10) => {
+    const start = (page - 1) * resPerPage;
+    const end = page * resPerPage;
+        //slice extracts up to but not including the End
+	recipes.slice(start, end).forEach(renderRecipe);
 };
