@@ -1,4 +1,5 @@
 import Search from "./models/Search";
+import Recipe from "./models/Recipe"
 import * as searchView from "./views/searchView";
 import { elements, spinner, removeSpinner } from "./views/base";
 
@@ -8,8 +9,11 @@ import { elements, spinner, removeSpinner } from "./views/base";
 - Shopping list object
 - Liked recipes
 */
-
 const state = {};
+
+/* 
+	SEARCH CONTROLLER
+*/
 
 let submitClicked = async () => {
 	//get query from the form input
@@ -27,6 +31,7 @@ let submitClicked = async () => {
         //show the results on the ui. Search.result = recipe
         removeSpinner();
 		searchView.renderResults(state.search.result);
+		console.log(state.search.result);
 	}
 };
 
@@ -46,3 +51,10 @@ elements.searchResPages.addEventListener('click', e => {
 		console.log(goTo);
 	}
 })
+
+/* 
+	RECIPE CONTROLLER
+*/
+
+let r = new Recipe('2ea734');
+r.getRecipe()
