@@ -13,13 +13,13 @@ export const elementSrings = {
 
 export const spinner = (parent) => {
 	const spinDOM = `
-        <div class="${elementSrings.loader}">
-            <svg>
-                <use href="img/icons.svg#icon-cw"></use>
-            </svg>
-        </div>
-    `;
-    parent.insertAdjacentHTML('afterbegin', spinDOM)
+	<div class="${elementSrings.loader}">
+	    <svg>
+		<use href="img/icons.svg#icon-cw"></use>
+	    </svg>
+	</div>
+	    `;
+	parent.insertAdjacentHTML('afterbegin', spinDOM)
 };
 
 export const removeSpinner = () => {

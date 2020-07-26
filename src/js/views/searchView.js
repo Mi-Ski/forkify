@@ -34,6 +34,7 @@ export const clearPrevious = () => {
     elements.searchResList.innerHTML = "";
     elements.searchResPages.innerHTML = '';
 };
+
 //////////////////////////////////////////////////////////////////////////
 // formatting the recipe title
 
