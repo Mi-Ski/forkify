@@ -17,8 +17,9 @@ const state = {};
 
 let submitClicked = async () => {
 	//get query from the form input
-	const query = searchView.getInput();
-
+	//const query = searchView.getInput();
+	const query = 'fig';
+	
 	if (query) {
 		//new search object and add to state
 		state.search = new Search(query);
@@ -40,6 +41,13 @@ let submitClicked = async () => {
 };
 
 elements.searchForm.addEventListener("submit", (e) => {
+	//prevents reloading the page after submitting
+	e.preventDefault();
+	submitClicked();
+});
+
+//TESTING
+window.addEventListener("load", (e) => {
 	//prevents reloading the page after submitting
 	e.preventDefault();
 	submitClicked();
@@ -70,13 +78,16 @@ const controlRecipe = async () => {
 	
 	//create a new recipe object
 	state.recipe = new Recipe(id);
+	window.r = state.recipe;
 
 	try {
 		//get recipe data
 		await state.recipe.getRecipe();
+
 		//calc time and servings
 		state.recipe.calcTime();
 		state.recipe.calcServings();
+
 		//render the recipe on ui
 		console.log(state.recipe);
 		
