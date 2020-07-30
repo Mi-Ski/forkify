@@ -309,16 +309,6 @@ body {
     position: relative;
     transform: scale(1.04) translateY(-1px);
     transform-origin: top; }
-    .recipe__fig::before {
-      content: '';
-      display: block;
-      height: 100%;
-      width: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      background-image: linear-gradient(to right bottom, #FBDB89, #F48982);
-      opacity: .6; }
   .recipe__img {
     width: 100%;
     display: block;
@@ -382,7 +372,8 @@ body {
     transition: all .2s;
     display: flex;
     align-items: center;
-    justify-content: center; }
+    justify-content: center;
+    z-index: 4; }
     .recipe__love:hover {
       transform: scale(1.07); }
     .recipe__love:focus {

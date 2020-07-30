@@ -36,6 +36,7 @@ export default class Recipe {
     parseIngredients() {
 		const unitsLong = ['tablespoons', 'tablespoon', 'ounce', 'ounces', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
 		const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
+        const units = [...unitsShort, 'kg', 'g']
 
 		const newIngredients = this.ingredients.map(el => {
 
@@ -52,11 +53,27 @@ export default class Recipe {
 			//3 parse ingredients into count, unit and ingredient
 			const arrIng = ingredient.split(' ')
 			//true/false. for each element checks if it's inside the unitsShort array. returns index of the position where it turns out to be true
-            const unitIndex = arrIng.findIndex(el2 => unitsShort.includes(el2));
+            const unitIndex = arrIng.findIndex(el2 => units.includes(el2));
 
             let objIng;
             if (unitIndex > -1) {
-                //there is an unit
+                //there is a unit
+                const arrCount = arrIng.slice(0, unitIndex)
+
+                let count;
+                if (arrCount.length === 1) {
+                    count = eval(arrIng[0].replace('-', '+'));
+                } else {
+                    //eval evaluates the string as a js code, will do the math
+                    //arrCount [4, 1/2] -> 4 + 1/2 -> 4,5
+                    count = eval(arrIng.slice(0, unitIndex).join('+'))
+                }
+
+                objIng = {
+                    count,
+                    unit: arrIng[unitIndex],
+                    ingredient: arrIng.slice(3).join(' ')
+                }
             } else if (parseInt(arrIng[0], 10)) {
                 //there is no unit, but the 1st element is a number
                 objIng = {
@@ -77,5 +94,17 @@ export default class Recipe {
 			return objIng;
 		});
 		this.ingredients = newIngredients;
+    }
+
+    updateServings(type) {
+        //servings
+        const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+        //ingredients
+        this.ingredients.forEach(ing => {
+            // ing.count = ing.count * (newServings / this.servings)
+            ing.count *= (newServings / this.servings)
+        })
+
+        this.servings = newServings;
     }
 }
