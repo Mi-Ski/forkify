@@ -1,5 +1,6 @@
 import Search from "./models/Search";
 import Recipe from "./models/Recipe";
+import List from "./models/List";
 import * as searchView from "./views/searchView";
 import * as recipeView from "./views/recipeViews"
 import { elements, spinner, removeSpinner } from "./views/base";
@@ -63,8 +64,6 @@ elements.searchResPages.addEventListener('click', e => {
 const controlRecipe = async () => {
     //deleting # from the window hash string
     const id = window.location.hash.replace('#', '');
-    console.log(id);
-
     if (id) {
 	if (state.search) searchView.highlightSelected(id);
 	//prepare ui for the changes
@@ -76,7 +75,6 @@ const controlRecipe = async () => {
 	try {
 		//get recipe data and parse the ingredients
 		await state.recipe.getRecipe();
-		console.log(state.recipe.ingredients);
 		state.recipe.parseIngredients() 
 		
 		//calc time and servings
@@ -93,11 +91,12 @@ const controlRecipe = async () => {
     }
 }
 
-//window.addEventListener('hashchange', controlRecipe);
-//window.addEventListener('load', controlRecipe);
+// window.addEventListener('hashchange', controlRecipe);
+// window.addEventListener('load', controlRecipe);
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
-//Handling recipe button clicks
+// Handling recipe button clicks
+// Event delegation, elements are not yet on the page when it loads
 elements.recipe.addEventListener('click', e => {
 	//btn-decrease *     -> any child of btn-decrease
 	if (e.target.matches('.btn-decrease, .btn-decrease *')) {
@@ -110,6 +109,8 @@ elements.recipe.addEventListener('click', e => {
 			state.recipe.updateServings('inc')
 			recipeView.updateServingsIngredients(state.recipe);
 		}
-	}
+	} else if (e.target.matches)
 	console.log(state.recipe);
 })
+
+window.l = new List(); 
