@@ -1,7 +1,7 @@
-import { elements } from './base.js'
+import { elements } from './base';
 
-export const renderItem = item => {
-    const markup = `
+export const renderItem = (item) => {
+  let markup = `
         <li class="shopping__item" data-itemid="${item.id}">
             <div class="shopping__count">
                 <input type="number" value="${item.count}" step="${item.count}" class="shopping__count-value">
@@ -14,11 +14,11 @@ export const renderItem = item => {
                 </svg>
             </button>
         </li>
-    `
-    elements.shopping.insertAdjacentElement('beforeend', markup)
-}
+    `;
+  elements.shopping.insertAdjacentHTML("beforeend", markup);
+};
 
-export const deleteItem = itemId => {
-    const item = document.querySelector(`[data-itemid="${itemId}"]`)
-    item.parentElement.removeChild(item);
-}
+export const deleteItem = (itemId) => {
+  const item = document.querySelector(`[data-itemid="${itemId}"]`);
+  item.parentElement.removeChild(item);
+};
