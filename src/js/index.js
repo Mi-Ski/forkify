@@ -13,7 +13,7 @@ import { elements, spinner, removeSpinner } from "./views/base";
 - Liked recipes
 */
 const state = {};
-
+window.state = state;
 /* 
 	SEARCH CONTROLLER
 */
@@ -106,6 +106,19 @@ const controlList = () => {
     listView.renderItem(item);
   });
 };
+
+// Handle, delete and update list item events
+elements.shopping.addEventListener('click', e => {
+  const id = e.target.closest('.shopping__item').dataset.itemid;
+
+  // handle the delete button
+  if (e.target.matches('.shopping__delete, .shopping__delete *')) {
+    // delete from state
+    state.list.deleteItem(id);
+    //delete from UI
+    listView.deleteItem(id);
+  };
+});
 
 // window.addEventListener('hashchange', controlRecipe);
 // window.addEventListener('load', controlRecipe);
