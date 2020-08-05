@@ -24,3 +24,4 @@ export const deleteItem = (itemId) => {
     item.parentElement.removeChild(item)
   };
 };
+

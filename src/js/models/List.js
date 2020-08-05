@@ -27,7 +27,7 @@ export default class List {
     //[0,3,6,7] slice(1, 2)    -> returns[3], original array is [0,3,6,7]
     this.items.splice(index, 1);
   }
-  updateCount(identifier, newCount) {
-    this.items.find((el) => el.id === identifier).count = newCount;
+  updateCount(id, newCount) {
+      this.items.find(el => el.id === id).count = parseFloat(newCount);
   }
 }

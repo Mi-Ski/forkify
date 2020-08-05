@@ -65,6 +65,7 @@ elements.searchResPages.addEventListener("click", (e) => {
 const controlRecipe = async () => {
   //deleting # from the window hash string
   const id = window.location.hash.replace("#", "");
+
   if (id) {
     if (state.search) searchView.highlightSelected(id);
     //prepare ui for the changes
@@ -91,40 +92,51 @@ const controlRecipe = async () => {
   }
 };
 
+// window.addEventListener('hashchange', controlRecipe);
+// window.addEventListener('load', controlRecipe);
+["hashchange", "load"].forEach((event) =>
+  window.addEventListener(event, controlRecipe)
+);
+
 /* 
 	LIST CONTROLLER
 */
 
 const controlList = () => {
   // Create new list if there is none yet
-  if (!state.list) state.list = new List();
+  if (!state.list) {
+    state.list = new List()
+   } else state.list = state.list;
 
   // Add each ingredient to the list and UI (it's an array, so forEach)
   state.recipe.ingredients.forEach((el) => {
     // Saving to const b/c it returns item(uniqid, count, unit, ingredient)
-    const item = state.list.addItem(el.count, el.unit, el.ingredient);
+    let item = state.list.addItem(el.count, el.unit, el.ingredient);
     listView.renderItem(item);
   });
 };
 
+
 // Handle, delete and update list item events
 elements.shopping.addEventListener('click', e => {
   const id = e.target.closest('.shopping__item').dataset.itemid;
-
-  // handle the delete button
+  console.log(id);
+  //console.log(e.target.value);
+  // Handle the delete button
   if (e.target.matches('.shopping__delete, .shopping__delete *')) {
-    // delete from state
+    // Delete from state
     state.list.deleteItem(id);
-    //delete from UI
-    listView.deleteItem(id);
-  };
+ 
+    // Delete from UI
+    listView.deleteItem(id);  
+    // Handel the count update
+  }else if (e.target.matches('.shopping__count *')) {
+    let val = parseFloat(e.target.value);
+    console.log(val);
+    state.list.updateCount(id, val);
+  }
 });
 
-// window.addEventListener('hashchange', controlRecipe);
-// window.addEventListener('load', controlRecipe);
-["hashchange", "load"].forEach((event) =>
-  window.addEventListener(event, controlRecipe)
-);
 
 // Handling recipe button clicks
 // Event delegation, elements are not yet on the page when it loads
