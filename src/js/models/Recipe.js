@@ -88,7 +88,7 @@ export default class Recipe {
                     unit: '',
                     ingredient
                     //ingredient: ingredient
-                }
+                }   
             }
 
 			return objIng;
