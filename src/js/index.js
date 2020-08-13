@@ -145,28 +145,32 @@ elements.shopping.addEventListener("click", (e) => {
 */
 // TESTING
 state.likes = new Likes();
+likesView.toggleLikeMenu(state.likes.getNumLikes())	
 
 const controlLike = () => {
 	if (!state.likes) {
 		state.likes = new Likes();
-	}
+	};
 
 	const currentId = state.recipe.id;
 
 	// user has not yet liked a recipe
 	if (!state.likes.isLiked(currentId)) {
 		// 1. add like to the state
-		const newLike = state.likes.addLike(currentId, state.recipe.title, state.recipe.author, state.recipe.img);
+		const newLike = state.likes.addLike(
+			currentId,
+			state.recipe.title,
+			state.recipe.author,
+			state.recipe.img
+		);
 
 		// 2. toggle the like button
 		likesView.toggleLikeButton(true)
 
 		// 3. add like to the UI
-		console.log(state.likes);
+		likesView.renderLike(newLike);
 
 		// the recipe is already liked
-
-
 	} else {
 		// 1. remove like from the state
 		state.likes.deleteLike(currentId);
@@ -175,9 +179,9 @@ const controlLike = () => {
 		likesView.toggleLikeButton(false);
 
 		// 3. remove like from the UI
-		console.log(state.likes);
-
+		likesView.deleteLike(currentId);
 	}
+	likesView.toggleLikeMenu(state.likes.getNumLikes())
 };
 
 // Handling recipe button clicks
