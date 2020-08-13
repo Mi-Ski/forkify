@@ -17,6 +17,7 @@ export default class List {
     this.items.push(item);
     return item;
   }
+
   deleteItem(identifier) {
     //will find the index of the element that satisfies the condition
     const index = this.items.findIndex(
@@ -27,7 +28,9 @@ export default class List {
     //[0,3,6,7] slice(1, 2)    -> returns[3], original array is [0,3,6,7]
     this.items.splice(index, 1);
   }
+
   updateCount(id, newCount) {
       this.items.find(el => el.id === id).count = parseFloat(newCount);
   }
+  
 }

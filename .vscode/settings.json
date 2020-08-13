@@ -1,9 +1,13 @@
 {
-    "editor.mouseWheelZoom": true,
-    
-    "workbench.colorCustomizations": {
-        "statusBar.background": "#333333",
-        "statusBar.noFolderBackground": "#333333",
-        "statusBar.debuggingBackground": "#263238"
-      },
+  "editor.mouseWheelZoom": true,
+
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#333333",
+    "statusBar.noFolderBackground": "#333333",
+    "statusBar.debuggingBackground": "#263238",
+    "editor.background": "#1a1d20",
+    // "editor.selectionBackground": "#ff5cff86",
+    // "editor.selectionHighlightBackground": "#85a1ff"
+    "editor.lineHighlightBackground": "#141414"
+  }
 }

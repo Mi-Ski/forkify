@@ -87,7 +87,11 @@ const controlRecipe = async () => {
 
 			//render the recipe on ui
 			removeSpinner();
-			recipeView.renderRecipe(state.recipe);
+			recipeView.renderRecipe(
+				state.recipe,
+				state.likes.isLiked(id)
+			);
+
 		} catch (error) {
 			console.log(`Error processing recipe! ${error}`);
 		}
@@ -139,6 +143,8 @@ elements.shopping.addEventListener("click", (e) => {
 /* 
 	LIKES CONTROLLER
 */
+// TESTING
+state.likes = new Likes();
 
 const controlLike = () => {
 	if (!state.likes) {
@@ -146,23 +152,31 @@ const controlLike = () => {
 	}
 
 	const currentId = state.recipe.id;
+
 	// user has not yet liked a recipe
 	if (!state.likes.isLiked(currentId)) {
 		// 1. add like to the state
 		const newLike = state.likes.addLike(currentId, state.recipe.title, state.recipe.author, state.recipe.img);
+
 		// 2. toggle the like button
+		likesView.toggleLikeButton(true)
 
 		// 3. add like to the UI
 		console.log(state.likes);
 
 		// the recipe is already liked
+
+
 	} else {
 		// 1. remove like from the state
 		state.likes.deleteLike(currentId);
+
 		// 2. toggle the like button
+		likesView.toggleLikeButton(false);
 
 		// 3. remove like from the UI
 		console.log(state.likes);
+
 	}
 };
 
