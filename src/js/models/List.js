@@ -20,9 +20,7 @@ export default class List {
 
   deleteItem(identifier) {
     //will find the index of the element that satisfies the condition
-    const index = this.items.findIndex(
-      (currentElement) => currentElement.id === identifier
-    );
+    const index = this.items.findIndex((currentElement) => currentElement.id === identifier);
 
     //[0,3,6,7] splice(1, 2)   -> returns[3,6], original array is [0,7]
     //[0,3,6,7] slice(1, 2)    -> returns[3], original array is [0,3,6,7]

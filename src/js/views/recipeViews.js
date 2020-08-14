@@ -2,23 +2,24 @@ import { elements } from "./base.js";
 import { Fraction } from "fractional";
 
 const formatCount = (count) => {
+  const roundCount = Math.round(count * 1000) / 1000;
   if (count) {
     //destructures eg. 2.5 into [int =2, dec =5], converts strings into integers
-    const [int, dec] = count
+    const [int, dec] = roundCount
       .toString()
       .split(".")
       .map((el) => parseInt(el, 10));
 
     //if there's no decimal just return the count
-    if (!dec) return count;
+    if (!dec) return roundCount;
 
     if (int === 0) {
       //eg 0.4
-      const fr = new Fraction(count);
+      const fr = new Fraction(roundCount);
       return `${fr.numerator}/${fr.denominator}`;
     } else {
       //eg. 2.3
-      const fr = new Fraction(count - int);
+      const fr = new Fraction(roundCount - int);
       return `${int} ${fr.numerator}/${fr.denominator}`;
     }
   }

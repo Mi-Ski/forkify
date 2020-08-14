@@ -15,11 +15,10 @@ import { elements, spinner, removeSpinner } from "./views/base";
 - Liked recipes
 */
 const state = {};
-window.state = state;
+
 /* 
 	SEARCH CONTROLLER
 */
-
 let submitClicked = async () => {
 	//get query from the form input
 	const query = searchView.getInput();
@@ -97,7 +96,6 @@ const controlRecipe = async () => {
 		}
 	}
 };
-
 // window.addEventListener('hashchange', controlRecipe);
 // window.addEventListener('load', controlRecipe);
 ["hashchange", "load"].forEach((event) => window.addEventListener(event, controlRecipe));
@@ -105,7 +103,6 @@ const controlRecipe = async () => {
 /* 
 	LIST CONTROLLER
 */
-
 const controlList = () => {
 	// Create new list if there is none yet
 	if (!state.list) {
@@ -123,7 +120,6 @@ const controlList = () => {
 // Handle, delete and update list item events
 elements.shopping.addEventListener("click", (e) => {
 	const id = e.target.closest(".shopping__item").dataset.itemid;
-	console.log(id);
 	//console.log(e.target.value);
 	// Handle the delete button
 	if (e.target.matches(".shopping__delete, .shopping__delete *")) {
@@ -135,7 +131,6 @@ elements.shopping.addEventListener("click", (e) => {
 		// Handel the count update
 	} else if (e.target.matches(".shopping__count *")) {
 		let val = parseFloat(e.target.value);
-		console.log(val);
 		state.list.updateCount(id, val);
 	}
 });
@@ -143,10 +138,6 @@ elements.shopping.addEventListener("click", (e) => {
 /* 
 	LIKES CONTROLLER
 */
-// TESTING
-state.likes = new Likes();
-likesView.toggleLikeMenu(state.likes.getNumLikes())	
-
 const controlLike = () => {
 	if (!state.likes) {
 		state.likes = new Likes();
@@ -184,6 +175,17 @@ const controlLike = () => {
 	likesView.toggleLikeMenu(state.likes.getNumLikes())
 };
 
+// Restore liked recipes on page load
+window.addEventListener('load', () => {
+	state.likes = new Likes();
+	// Restore likes
+	state.likes.readStorage();
+	// Toggle like menu button
+	likesView.toggleLikeMenu(state.likes.getNumLikes());
+	// Render existing likes in the likes view
+	state.likes.likes.forEach(element => likesView.renderLike(element));
+})
+
 // Handling recipe button clicks
 // Event delegation, elements are not yet on the page when it loads
 elements.recipe.addEventListener("click", (e) => {
@@ -205,8 +207,6 @@ elements.recipe.addEventListener("click", (e) => {
 		// call the likes controller
 		controlLike();
 	}
-
-	console.log(state.recipe);
 });
 
 window.l = new List();
